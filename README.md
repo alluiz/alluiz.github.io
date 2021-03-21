@@ -4,7 +4,7 @@ Jogo baseado no game Asteroids com algumas modificações para tornar o jogo mai
 
 ## Author
 
-Luiz Gustavo
+Luiz Gustavo Santos de Almeida RA: 11082415
 
 ## Como jogar?
 
