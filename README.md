@@ -1,6 +1,6 @@
 # Asteroids 2.0
 
-Jogo baseado no game Asteroids com algumas modificações para tornar o jogo mais iterativo e divertido.
+Jogo baseado no game Asteroids com algumas modificações para tornar o jogo mais iterativo, divertido e colorido.
 
 ## Author
 
@@ -14,6 +14,9 @@ Para jogar é muito fácil, utilize as setas do teclado ou WASD para movimentar 
 - A - Movimentar para esquerda
 - D - Movimentar para a direita
 - S - Freiar
+
+Link do jogo
+https://alluiz.github.io/public/asteroidsv2.html
 
 ## License
 
