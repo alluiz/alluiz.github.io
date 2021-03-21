@@ -1,4 +1,4 @@
-# Asteroids v2
+# Asteroids 2.0
 
 Jogo baseado no game Asteroids com algumas modificações para tornar o jogo mais iterativo e divertido.
 
