@@ -32,6 +32,7 @@ void Asteroids::initializeGL(GLuint program, int quantity) {
 }
 
 void Asteroids::paintGL() {
+  
   glUseProgram(m_program);
 
   for (auto &asteroid : m_asteroids) {
@@ -57,10 +58,12 @@ void Asteroids::paintGL() {
 }
 
 void Asteroids::terminateGL() {
+
   for (auto asteroid : m_asteroids) {
-    glDeleteBuffers(1, &asteroid.m_vbo);
+    glDeleteBuffers(1, &asteroid.m_vboPositions);
     glDeleteVertexArrays(1, &asteroid.m_vao);
   }
+
 }
 
 void Asteroids::update(const Ship &ship, float deltaTime) {
@@ -88,11 +91,10 @@ Asteroids::Asteroid Asteroids::createAsteroid(glm::vec2 translation,
   std::uniform_int_distribution<int> randomSides(6, 20);
   asteroid.m_polygonSides = randomSides(re);
 
-  // Choose a random color (actually, a grayscale)
-  std::uniform_real_distribution<float> randomIntensity(0.5f, 1.0f);
-  asteroid.m_color = glm::vec4(1) * randomIntensity(re);
+  std::uniform_real_distribution<float> rd(0.0f, 1.0f);
 
-  asteroid.m_color.a = 1.0f;
+
+  asteroid.m_color = glm::vec4{rd(m_randomEngine), rd(m_randomEngine), rd(m_randomEngine), rd(m_randomEngine)};
   asteroid.m_rotation = 0.0f;
   asteroid.m_scale = scale;
   asteroid.m_translation = translation;
@@ -116,8 +118,8 @@ Asteroids::Asteroid Asteroids::createAsteroid(glm::vec2 translation,
   positions.push_back(positions.at(1));
 
   // Generate VBO
-  glGenBuffers(1, &asteroid.m_vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, asteroid.m_vbo);
+  glGenBuffers(1, &asteroid.m_vboPositions);
+  glBindBuffer(GL_ARRAY_BUFFER, asteroid.m_vboPositions);
   glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(glm::vec2),
                positions.data(), GL_STATIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -131,7 +133,7 @@ Asteroids::Asteroid Asteroids::createAsteroid(glm::vec2 translation,
   // Bind vertex attributes to current VAO
   glBindVertexArray(asteroid.m_vao);
 
-  glBindBuffer(GL_ARRAY_BUFFER, asteroid.m_vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, asteroid.m_vboPositions);
   glEnableVertexAttribArray(positionAttribute);
   glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
   glBindBuffer(GL_ARRAY_BUFFER, 0);

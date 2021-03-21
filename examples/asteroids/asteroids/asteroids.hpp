@@ -29,7 +29,8 @@ class Asteroids {
 
   struct Asteroid {
     GLuint m_vao{};
-    GLuint m_vbo{};
+    GLuint m_vboPositions{};
+    GLuint m_vboColors{};
 
     float m_angularVelocity{};
     glm::vec4 m_color{1};
