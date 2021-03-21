@@ -28,18 +28,6 @@ void Ship::initializeGL(GLuint program) {
       glm::vec2{+15.5f, +02.5f},
       glm::vec2{+02.5f, +12.5f},
 
-      // Cannon left
-      glm::vec2{-12.5f, +10.5f},
-      glm::vec2{-12.5f, +04.0f},
-      glm::vec2{-09.5f, +04.0f},
-      glm::vec2{-09.5f, +10.5f},
-
-      // Cannon right
-      glm::vec2{+09.5f, +10.5f},
-      glm::vec2{+09.5f, +04.0f},
-      glm::vec2{+12.5f, +04.0f},
-      glm::vec2{+12.5f, +10.5f},
-
       // Thruster trail (left)
       glm::vec2{-10.0f, -07.5f},
       glm::vec2{-07.5f, -18.0f},
@@ -53,12 +41,17 @@ void Ship::initializeGL(GLuint program) {
 
   // Normalize
   for (auto &position : positions) {
-    position /= glm::vec2{15.5f, 15.5f};
+    position /= glm::vec2{15.5f, 15.5f}; 
   }
 
-  std::array indices{0, 1, 2, 0, 2, 3, 7, 0, 3, 7, 3, 4, 2, 3, 5,
+  std::array indices{0, 1, 2, 
+                     0, 2, 3, 
+                     7, 0, 3, 
+                     7, 3, 4, 
+                     2, 3, 5,
                      // Thruster trails
-                     16, 17, 18, 19, 20, 21};
+                     8, 9, 10, 
+                     11, 12, 13};
 
   // Generate VBO
   glGenBuffers(1, &m_vbo);

@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
           .height = 600, 
           .showFPS = false,
           .showFullscreenButton = false,
-          .title = "Asteroids"});
+          .title = "Asteroids v2"});
 
     // Run application
     app.run(window);
