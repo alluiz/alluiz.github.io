@@ -1,10 +1,19 @@
-# ABCg
+# Asteroids v2
 
-Development framework accompanying the course [MCTA008-17 Computer Graphics](http://professor.ufabc.edu.br/~harlen.batagelo/cg/) at [UFABC](https://www.ufabc.edu.br/).
+Jogo baseado no game Asteroids com algumas modificações para tornar o jogo mais iterativo e divertido.
 
 ## Author
 
-Harlen Batagelo
+Luiz Gustavo
+
+## Como jogar?
+
+Para jogar é muito fácil, utilize as setas do teclado ou WASD para movimentar a nave.
+
+- W - Aceleração
+- A - Movimentar para esquerda
+- D - Movimentar para a direita
+- S - Freiar
 
 ## License
 
