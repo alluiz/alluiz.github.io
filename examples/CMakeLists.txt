@@ -1,1 +1,1 @@
-add_subdirectory(asteroids)
+add_subdirectory(asteroidsv2)
