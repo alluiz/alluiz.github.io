@@ -101,7 +101,7 @@ void Ship::initializeGL(GLuint program) {
 }
 
 void Ship::paintGL(const GameData &gameData) {
-  if (gameData.m_state != State::Playing) return;
+  if (gameData.m_state != State::Playing && gameData.m_state != State::PlayingNoFire) return;
 
   glUseProgram(m_program);
 
@@ -126,6 +126,7 @@ void Ship::terminateGL() {
 }
 
 void Ship::update(const GameData &gameData, float deltaTime) {
+
   // Translation
   if (gameData.m_input[static_cast<size_t>(Input::Left)])
     m_translation -= m_velocity_horizontal * deltaTime;
@@ -135,15 +136,15 @@ void Ship::update(const GameData &gameData, float deltaTime) {
 
   // Apply thrust
   if (gameData.m_input[static_cast<size_t>(Input::Up)] &&
-      gameData.m_state == State::Playing) {
+      (gameData.m_state == State::Playing || gameData.m_state == State::PlayingNoFire)) {
     // Thrust in the forward vector
     glm::vec2 forward = glm::rotate(glm::vec2{0.0f, 1.0f}, m_rotation);
     m_velocity += forward * deltaTime;
     m_velocity_horizontal += glm::vec2{0.1f, 0} * deltaTime;
   }
 
-  if (gameData.m_input[static_cast<size_t>(Input::Down)] &&
-      gameData.m_state == State::Playing) {
+  if (gameData.m_input[static_cast<size_t>(Input::Down)] && 
+      (gameData.m_state == State::Playing || gameData.m_state == State::PlayingNoFire)) {
     // Thrust in the forward vector
     glm::vec2 forward = glm::rotate(glm::vec2{0.0f, 1.0f}, m_rotation);
 

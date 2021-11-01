@@ -1,6 +1,13 @@
-# Asteroids 2.0
+# Asteroids 2.1
 
 Jogo baseado no game Asteroids com algumas modificações para tornar o jogo mais iterativo, divertido e colorido.
+
+Foram acrescentados:
+
+- Movimentação lateral e sistema de frenagem da nave;
+- Velocidade de deslocamento lateral aumenta conforme a velocidade da nave para trazer maior agilidade ao jogador;
+- Para dificultar o jogo menos tiros são disparados e há uma sistema de recarga a cada 5 tiros durante 2 segundos com aviso;
+- Novas cores aleatórias e mudança de cor da nave conforme a cor do asteroid destruído;
 
 ## Author
 

@@ -87,8 +87,8 @@ void OpenGLWindow::initializeGL() {
 
 void OpenGLWindow::restart() {
   m_gameData.m_state = State::Playing;
-
-  m_starLayers.initializeGL(m_starsProgram, 25);
+  m_gameData.m_fires_available = 5;
+  m_starLayers.initializeGL(m_starsProgram, 50);
   m_ship.initializeGL(m_objectsProgram);
   m_asteroids.initializeGL(m_objectsProgram, 3);
   m_bullets.initializeGL(m_objectsProgram);
@@ -99,16 +99,29 @@ void OpenGLWindow::update() {
 
   // Wait 5 seconds before restarting
   if (m_gameData.m_state != State::Playing &&
+      m_gameData.m_state != State::PlayingNoFire &&
       m_restartWaitTimer.elapsed() > 5) {
     restart();
     return;
   }
+
+  if (m_gameData.m_state == State::PlayingNoFire) {
+
+    if(m_ship.m_firesTimer.elapsed() > 2) {
+      m_gameData.m_fires_available = 5;
+      m_gameData.m_state = State::Playing;
+    } else {
+      m_gameData.m_state = State::PlayingNoFire;
+    }
+  } 
+
+
   m_starLayers.update(m_ship, deltaTime);
   m_ship.update(m_gameData, deltaTime);
   m_asteroids.update(m_ship, deltaTime);
   m_bullets.update(m_ship, m_gameData, deltaTime);
 
-  if (m_gameData.m_state == State::Playing) {
+  if (m_gameData.m_state == State::Playing || m_gameData.m_state == State::PlayingNoFire) {
     checkCollisions();
     checkWinCondition();
   }
@@ -145,6 +158,8 @@ void OpenGLWindow::paintUI() {
       ImGui::Text("Game Over!");
     } else if (m_gameData.m_state == State::Win) {
       ImGui::Text("*You Win!*");
+    } else if (m_gameData.m_state == State::PlayingNoFire) {
+      ImGui::Text("Reloading..");
     }
 
     ImGui::PopFont();
@@ -197,6 +212,7 @@ void OpenGLWindow::checkCollisions() {
           if (distance < m_bullets.m_scale + asteroid.m_scale * 0.85f) {
             asteroid.m_hit = true;
             bullet.m_dead = true;
+            m_ship.m_color = asteroid.m_color;
           }
         }
       }

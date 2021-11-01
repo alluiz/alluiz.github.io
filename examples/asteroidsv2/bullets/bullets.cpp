@@ -75,22 +75,34 @@ void Bullets::terminateGL() {
   glDeleteVertexArrays(1, &m_vao);
 }
 
-void Bullets::update(Ship &ship, const GameData &gameData, float deltaTime) {
+void Bullets::update(Ship &ship, GameData &gameData, float deltaTime) {
+
   // Create a pair of bullets
   if (gameData.m_input[static_cast<size_t>(Input::Fire)] &&
-      gameData.m_state == State::Playing) {
-    // At least 250 ms must have passed since the last bullets
-    if (ship.m_bulletCoolDownTimer.elapsed() > 250.0 / 1000.0) {
-      ship.m_bulletCoolDownTimer.restart();
+      (gameData.m_state == State::Playing || gameData.m_state == State::PlayingNoFire)) {
 
-      // Bullets are shot in the direction of the ship's forward vector
-      glm::vec2 forward{glm::rotate(glm::vec2{0.0f, 1.0f}, ship.m_rotation)};
-      auto bulletSpeed{2.0f};
+      if (gameData.m_fires_available > 0) {
 
-      Bullet bullet{.m_dead = false,
-                    .m_translation = ship.m_translation,
-                    .m_velocity = ship.m_velocity + forward * bulletSpeed};
-      m_bullets.push_back(bullet);
+        // At least 250 ms must have passed since the last bullets
+        if (ship.m_bulletCoolDownTimer.elapsed() > 250.0 / 1000.0) {
+          ship.m_bulletCoolDownTimer.restart();
+
+        // Bullets are shot in the direction of the ship's forward vector
+        glm::vec2 forward{glm::rotate(glm::vec2{0.0f, 1.0f}, ship.m_rotation)};
+        auto bulletSpeed{2.0f};
+
+        Bullet bullet{.m_dead = false,
+                      .m_translation = ship.m_translation,
+                      .m_velocity = ship.m_velocity + forward * bulletSpeed};
+        m_bullets.push_back(bullet);
+
+        gameData.m_fires_available = gameData.m_fires_available - 1;
+
+        if (gameData.m_fires_available == 0) {
+          ship.m_firesTimer.restart();
+          gameData.m_state = State::PlayingNoFire;
+        }
+      }
     }
   }
 

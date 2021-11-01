@@ -15,7 +15,7 @@ class Bullets {
   void paintGL();
   void terminateGL();
 
-  void update(Ship &ship, const GameData &gameData, float deltaTime);
+  void update(Ship &ship, GameData &gameData, float deltaTime);
 
  private:
   friend OpenGLWindow;

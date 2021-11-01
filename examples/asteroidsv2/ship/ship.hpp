@@ -34,7 +34,7 @@ class Ship {
   GLuint m_vbo{};
   GLuint m_ebo{};
 
-  glm::vec4 m_color{1};
+  glm::vec4 m_color{0.9f,0.f,0.3f,1};
   float m_rotation{};
   float m_scale{0.125f};
   glm::vec2 m_translation{glm::vec2(0)};
@@ -43,6 +43,7 @@ class Ship {
 
   abcg::ElapsedTimer m_trailBlinkTimer;
   abcg::ElapsedTimer m_bulletCoolDownTimer;
+  abcg::ElapsedTimer m_firesTimer;
 };
 
 #endif
